@@ -1,12 +1,11 @@
 import React, {useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import CaixaTexto from '../componentes/CaixaTexto';
 import logo from '../assets/logoBook.png'
-import google from '../assets/google.png'
-
-const ip = "10.109.72.9:8000"
+import { Alert } from '@mui/material';
+const ip = "http://127.0.0.1:8000/"
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -22,7 +21,7 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1500
           })
-        navigate('/Teste')
+        navigate('/')
       }; 
 
     const mensagemErro = () =>{
@@ -36,18 +35,18 @@ const Login = () => {
   
     const login = () => {
         if (!email) {
-          console.log('Preencha o campo e-mail!')
+          alert('Preencha o campo e-mail!')
           return
         }
         else if (!senha) {
-            console.log('Preencha o campo senha!')
+            alert('Preencha o campo senha!')
         }
         else {
           enter()
         }
       }
       const enter = async () => {
-        axios.post(`http://${ip}/auth/jwt/create`, {
+        axios.post(`${ip}/auth/jwt/create`, {
           email: email,
           password: senha,
         }).then((resposta) => {
@@ -70,12 +69,14 @@ const Login = () => {
                 <h1 className='text-black font-semibold text-2xl pt-8'>Faça login na sua conta</h1>
             </div>
             <form className='flex flex-col items-center justify-center w-full'>
-            <CaixaTexto titulo="Nome" quantidadeCaracteres={11}  tipo='text' required placeholder='Digite o seu e-mail' mudanca={e => setCpf(e.target.value)} />
+            <CaixaTexto titulo="E-mail" quantidadeCaracteres={11}  tipo='text' required placeholder='Digite o seu e-mail' mudanca={e => setEmail(e.target.value)} />
             <CaixaTexto titulo="Senha" tipo='password' required placeholder='Digite a sua senha' mudanca={e => setSenha(e.target.value)} />
-                <div className='pb-10'>
+                <div className='pb-10'> 
+                <Link to={"/Cadastro"}>
                   <label className='text-blue-600 underline'>
-                    esqueci a minha senha
+                    Sou novo por aqui
                   </label>
+                </Link>
                 </div>
                 <div>
                     <button onClick={() => {
