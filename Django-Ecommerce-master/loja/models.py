@@ -1,32 +1,23 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.base_user import BaseUserManager
-from django.core.validators import MinValueValidator,MaxValueValidator
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError(("The Email must be set"))
-        # cpf = self.normalize_email(cpf)
-        user = self.model(email=email, **extra_fields)
-        
+            raise ValueError("The Email must be set")
+
+        user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save()
         return user
-    
-    def create_superuser(self, email, password, **extra_fields):
+
+    def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("is_active", True)
 
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError(("Superuser must have is_staff=True."))
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError(("Superuser must have is_superuser=True."))
         return self.create_user(email, password, **extra_fields)
-    
-class Cliente(AbstractUser):
-    username = None
+
+class Cliente(AbstractBaseUser):
     nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     data_nascimento = models.DateField()
@@ -39,23 +30,43 @@ class Cliente(AbstractUser):
     is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nome', 'telefone', 'data_nascimento', 'cpf', 'password']
+    REQUIRED_FIELDS = ['nome', 'telefone', 'data_nascimento', 'cpf']
 
-objects = CustomUserManager()
+    objects = CustomUserManager()
 
-class Categorias(models.Model):
+    def get_full_name(self):
+        return self.nome
+
+    def get_short_name(self):
+        return self.nome
+
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
+
+    def has_module_perms(self, app_label):
+        return self.is_superuser
+
+
+class Genero(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
+    def __str__(self) -> str:
+        return self.nome
+
+class Editora(models.Model):
     nome = models.CharField(max_length=50, unique=True)
     def __str__(self) -> str:
         return self.nome
 
 class Produtos(models.Model):
     nome = models.CharField(max_length=100)
+    autor = models.CharField(max_length=50, blank=True)
     descricao = models.TextField()
     preco = models.DecimalField(max_digits=6, decimal_places=2)
     qtd_estoque = models.PositiveIntegerField()
     disponibilidade = models.BooleanField(default=True)
     foto = models.ImageField(upload_to="produtos")
-    categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE)
+    editora = models.ForeignKey(Editora, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Genero, on_delete=models.CASCADE)
 
 
 class Enderecos(models.Model):

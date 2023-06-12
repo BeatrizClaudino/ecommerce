@@ -38,8 +38,19 @@ class ListarClientes(viewsets.ModelViewSet):
         return super().get_queryset()
 
 
-class CategoriaView(viewsets.ModelViewSet):
-    permission_classes=(IsAuthenticated, )
-    queryset = Categorias.objects.all()
-    serializer_class = CategoriaSerializer
+class GeneroView(viewsets.ModelViewSet):
+    queryset = Genero.objects.all()
+    serializer_class = GeneroSerializer
+
+class EditoraView(viewsets.ModelViewSet):
+    queryset = Editora.objects.all()
+    serializer_class = EditoraSerializer
+
+class produtosView(viewsets.ModelViewSet):
+    queryset = Produtos.objects.all()
+    serializer_class = ProdutoSerializer
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
 
