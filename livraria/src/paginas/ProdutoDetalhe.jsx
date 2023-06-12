@@ -17,6 +17,8 @@ const ProdutoDetalhe = ({carrinho}) => {
     const [editora, setEditora] = useState()
     const [idEditora, setIdEditora] = useState()
     const [descricao, setDescricao] = useState()
+    const [produto, setProduto] = useState()
+    var quantidade = 1
 
     useEffect(() => {
         axios.get(`${ip}/app/produtos/`)
@@ -24,6 +26,8 @@ const ProdutoDetalhe = ({carrinho}) => {
             console.log(res.data)
             {res.data.map((item) =>{
                 if(item.id == id){
+                    setProduto({"idItem":id,"nome": item.nome, "preco": item.preco, "quantidade": quantidade})
+                    console.log(item)
                     setFoto(item.foto)
                     setNome(item.nome)
                     setPreco(item.preco)
@@ -45,8 +49,28 @@ const ProdutoDetalhe = ({carrinho}) => {
             }
         )}
     })
-    })
+    },[])
 
+    function setInfos(){
+        let novoItem = true
+       if (typeof(Storage) !== "undefined") {
+        var carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        carrinho.map((item)=>{
+            if (item.idItem == id){
+                novoItem = false
+                item.quantidade += 1
+                item.preco = item.preco * item.quantidade
+            }
+        })
+        if (novoItem){
+            carrinho.push(produto)
+        }
+        localStorage.setItem("carrinho", JSON.stringify(carrinho))
+       }
+       else{
+        console.log("INDISPONÍVEL")
+       }
+    }
     return ( 
         <div className='w-full h-full bg-white'>
             <Header/>
@@ -90,7 +114,7 @@ const ProdutoDetalhe = ({carrinho}) => {
                 </div>
             </div>
             <div className='w-full flex items-center justify-center pt-8'>
-                <button className='bg-[#0DAD3A] w-[60%] h-[7vh] text-white rounded-lg text-[20px]' onClick={() => navigate('/carrinho')}>Adicionar ao carrinho</button>
+                <button className='bg-[#0DAD3A] w-[60%] h-[7vh] text-white rounded-lg text-[20px]' onClick={() => setInfos()}>Adicionar ao carrinho</button>
             </div>
             <div className='w-full flex items-center justify-center flex-col pt-7'>
                 <label className='text-[20px] font-bold'>Calcular frete</label>

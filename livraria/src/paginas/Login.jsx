@@ -4,8 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import CaixaTexto from '../componentes/CaixaTexto';
 import logo from '../assets/logoBook.png'
-import { Alert } from '@mui/material';
-const ip = "http://127.0.0.1:8000/"
+
+const ip = "http://127.0.0.1:8000"
+
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -54,12 +55,7 @@ const Login = () => {
             localStorage.setItem('token', JSON.stringify(resposta.data))
             showAlert()
         }).catch((erro) => {
-            if (erro.response.status === 401){
-                mensagemErro()
-            }
-            else{
-              console.log(erro + "errinho")
-            }
+            console.log(erro + "errinho")
         })
       }
     return (

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 //FAZER DEPOIS: CRIAR UM COMPONENTE PARA O ENDEREÇO IP
 
-const ip = "http://127.0.0.1:8000/"
+const ip = "http://127.0.0.1:8000"
 
 const Home = () => {
   const navigate = useNavigate()
@@ -22,7 +22,7 @@ const Home = () => {
     .then((res) => {
       setValor(res.data)
     })
-  })
+  },[])
   // const [user, setUser] = useState()
 
   // useEffect(() => {

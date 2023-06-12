@@ -33,7 +33,9 @@ const Header = ({ navigation }) => {
                     <Link to={'/Login'}>
                       <img className='w-7 h-9' src={user} alt='Ícone de usuário' />
                     </Link>
-                    <img className='w-8 h-8' src={carrinho} alt='Ícone do carrinho' />
+                    <Link to={'/Carrinho'}>
+                      <img className='w-8 h-8' src={carrinho} alt='Ícone do carrinho' />
+                    </Link>
                 <Link to={'/'} className='text-white hover:text-red-800' onClick={logout}>Sair</Link>
                   </div>
                 </div>

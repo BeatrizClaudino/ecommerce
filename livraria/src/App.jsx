@@ -7,6 +7,7 @@ import ProdutoDetalhe from './paginas/ProdutoDetalhe'
 import Swal from "sweetalert2";
 import axios from 'axios'
 import { useState } from 'react'
+import Carrinho from './paginas/Carrinho'
 
 const API = "http://127.0.0.1:8000"
 
@@ -69,6 +70,7 @@ function App() {
         <Route path='/Login' element={<Login />} />
         <Route path="/Cadastro" element={<Cadastro conta={criarconta}/>} />
         <Route path="/ProdutoDetalhe/:id" element={<ProdutoDetalhe/>} />
+        <Route path="/Carrinho" element={<Carrinho/>} />
         <Route path='/' element={<Home />} />
       </Routes>
   )
