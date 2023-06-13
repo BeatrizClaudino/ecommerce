@@ -69,7 +69,7 @@ const Header = ({ navigation }) => {
                   </div>
                 </div>
                 <div className='w-full flex items-center justify-center'>
-                  <input className='p-4 w-[90%] h-10 rounded-lg shadow-lg' placeholder='Qual aventura deseja buscar?' />
+                  <input className='p-4 w-[90%] lg:w-[30%] h-10 rounded-lg shadow-lg' placeholder='Qual aventura deseja buscar?' />
                 </div>
               </nav>
             </div>

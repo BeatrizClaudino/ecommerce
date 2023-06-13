@@ -26,7 +26,7 @@ const ProdutoDetalhe = ({carrinho}) => {
             console.log(res.data)
             {res.data.map((item) =>{
                 if(item.id == id){
-                    setProduto({"idItem":id,"nome": item.nome, "preco": item.preco, "quantidade": quantidade})
+                    setProduto({"idItem":id,"nome": item.nome, "preco": item.preco, "quantidade": quantidade, "foto": item.foto, "autor": item.autor, "editora":item.editora})
                     console.log(item)
                     setFoto(item.foto)
                     setNome(item.nome)
@@ -51,35 +51,37 @@ const ProdutoDetalhe = ({carrinho}) => {
     })
     },[])
 
-    function setInfos(){
-        let novoItem = true
-       if (typeof(Storage) !== "undefined") {
-        var carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-        carrinho.map((item)=>{
-            if (item.idItem == id){
-                novoItem = false
-                item.quantidade += 1
-                item.preco = item.preco * item.quantidade
+    function setInfos() {
+        let novoItem = true;
+        if (typeof Storage !== 'undefined') {
+          var carrinhoString = localStorage.getItem('carrinho');
+          var carrinho = carrinhoString ? JSON.parse(carrinhoString) : [];
+          carrinho.forEach((item) => {
+            if (item.idItem === id) {
+              novoItem = false;
+              item.quantidade += 1;
             }
-        })
-        if (novoItem){
-            carrinho.push(produto)
+          });
+          if (novoItem) {
+            carrinho.push(produto);
+          }
+          localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        } else {
+          console.log('INDISPONÍVEL');
         }
-        localStorage.setItem("carrinho", JSON.stringify(carrinho))
-       }
-       else{
-        console.log("INDISPONÍVEL")
-       }
-    }
+      }
+      
+      
     return ( 
-        <div className='w-full h-full bg-white'>
+        <div className='w-full h-full bg-white flex items-center flex-col'>
             <Header/>
+            <div className='lg:w-[40%]'>
             <div className='flex p-6 items-center'>
                 <div className='w-[80%]'>
                     <img src={foto} alt="" />
                 </div>
                 <div className='flex flex-col items-center justify-center text-center w-full'>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col '>
                         <div className='w-full flex flex-row-reverse'>
                             <button className='bg-red-700 w-6 h-6'/>
                         </div>
@@ -99,16 +101,16 @@ const ProdutoDetalhe = ({carrinho}) => {
                     </div>
                 </div>
             </div>
-            <div className='flex justify-around'>
+            <div className='flex justify-around lg:pt-14 '>
                 <div className='flex flex-col '>
-                    <label className='font-bold'>Avaliações</label>
+                    <label className='font-bold lg:text-[22px]'>Avaliações</label>
                     <label>1,2 mil usuários</label>
                 </div>
-                <div className='flex flex-col '>
+                <div className='flex flex-col lg:text-[20px]'>
                     <label className='font-bold'>Likes</label>
                     <label>1.000</label>
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col lg:text-[20px]'>
                     <label className='font-bold'>Páginas</label>
                     <label>336</label>
                 </div>
@@ -124,7 +126,7 @@ const ProdutoDetalhe = ({carrinho}) => {
                 <label>{descricao}</label>
             </div>
         </div>
-    
+        </div>
     );
 }
  

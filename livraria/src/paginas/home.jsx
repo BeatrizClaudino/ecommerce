@@ -43,7 +43,7 @@ const Home = () => {
       <Header />
       <div className='w-full h-full flex flex-col items-center'>
         <img className='w-full md:w-[80%] lg:w-[70%] lg:h-[80vh]' src={livraria} />
-        <div className='flex flex-col text-center w-[90%] h-[30vh] items-center justify-center'>
+        <div className='flex flex-col text-center w-full h-[30vh] items-center justify-center'>
           <label className='text-[22px]'>Categorias</label>
           <Carrossel />
         </div>
