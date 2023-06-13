@@ -19,7 +19,7 @@ import { FreeMode, Pagination } from "swiper";
 
 export default function App() {
   return (
-    <div className="w-[100%] flex items-center justify-center">
+    <div className="w-[100%] flex items-center justify-center mb-20">
       <Swiper className="hidden lg:flex pt-5 w-[75%] h-[20vh] items-center justify-center"
         slidesPerView={5}
         spaceBetween={12}

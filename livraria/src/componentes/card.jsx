@@ -9,18 +9,17 @@ const CardAmarelo = ({ image, texto, estrelas, valor, onClick, id }) => {
     return (
         <div className='flex flex-col items-center' >
             <Link to={`/ProdutoDetalhe/${id}`} className="text-black">
-                <div className='bg-[#FFEDAE] w-[40vw] h-[25vh] md:w-[20vw] flex flex-col justify-center items-center text-center '>
+                <div className='bg-blue-200 rounded-lg w-[40vw] h-[30vh] md:w-[20vw] flex flex-col justify-center items-center text-center mb-10'>
                     <div className='w-[90%] flex items-center flex-col'>
                         <div className='w-[90px]'><img src={image} alt="" /></div>
-                        <div className='text-[12px]'>{texto}</div>
+                        <div className='text-[15px] '>{texto}</div>
                         <div>{estrelas}</div>
-                        <div>{valor}</div>
+                        <div className='text-blue-950 text-[18px] font-bold'>R$ {valor}</div>
                     </div>
                 </div >
-                <div className='flex justify-center'>
-
-                <button className='w-12 flex items-center justify-center h-12 bg-green-800 rounded-full' onClick={onClick}><img className='w-[8vw]' src={mais} alt="" /></button>
-                </div>
+                {/* <div className='flex justify-center mb-8 -mt-3'>
+                <button className='w-8 flex items-center justify-center h-8 bg-blue-950 rounded-full' onClick={onClick}><img className='w-[8vw]' src={mais} alt="" /></button>
+                </div> */}
             </Link>
         </div>
     );
