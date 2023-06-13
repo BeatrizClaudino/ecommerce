@@ -13,7 +13,7 @@ class ProdutoSerializer(serializers.ModelSerializer):
 class ClientesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
-        fields=['user_id', 'nome', 'cpf', 'email', 'data_nascimento', 'telefone', 'password']
+        fields=['id', 'nome', 'cpf', 'email', 'data_nascimento', 'telefone', 'password']
 class EnderecosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enderecos
